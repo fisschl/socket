@@ -40,7 +40,6 @@ export interface TranslateRequest {
   key: string;
   language?: string;
   text?: string;
-  model?: string;
 }
 
 export const handleTranslate = (socket: Socket) => {
