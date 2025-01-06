@@ -1,4 +1,4 @@
-import type { Server, Socket } from "socket.io";
+import type { Socket } from "socket.io";
 import type OpenAI from "openai";
 import { MoonshotBaseClient } from "./translate.ts";
 
@@ -14,7 +14,7 @@ export interface NamingRequest {
   case: string;
 }
 
-export const handleVariables = (io: Server, socket: Socket) => {
+export const handleVariables = (socket: Socket) => {
   socket.on("variables", async (request: NamingRequest) => {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [];
     messages.push(
@@ -25,10 +25,10 @@ export const handleVariables = (io: Server, socket: Socket) => {
       {
         role: "user",
         content: request.text,
-      }
+      },
     );
     const stream = await MoonshotBaseClient.chat.completions.create({
-      model: "moonshot-v1-8k",
+      model: "moonshot-v1-auto",
       messages,
       stream: true,
       max_tokens: 2048,

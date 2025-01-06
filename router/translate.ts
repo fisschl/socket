@@ -1,4 +1,4 @@
-import type { Server, Socket } from "socket.io";
+import type { Socket } from "socket.io";
 import OpenAI from "openai";
 import { htmlToMarkdown, parseMarkdown } from "../utils/markdown.ts";
 
@@ -36,25 +36,6 @@ export const DashscopeBaseClient = new OpenAI({
   baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
 });
 
-export const models = [
-  {
-    model: "moonshot-v1-8k",
-    client: MoonshotBaseClient,
-  },
-  {
-    model: "qwen-max",
-    client: DashscopeBaseClient,
-  },
-  {
-    model: "gpt-4o-mini",
-    client: OpenAIBaseClient,
-  },
-  {
-    model: "gpt-4o",
-    client: OpenAIBaseClient,
-  },
-];
-
 export interface TranslateRequest {
   key: string;
   language?: string;
@@ -62,7 +43,7 @@ export interface TranslateRequest {
   model?: string;
 }
 
-export const handleTranslate = (io: Server, socket: Socket) => {
+export const handleTranslate = (socket: Socket) => {
   socket.on("translation", async (request: TranslateRequest) => {
     const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [];
     messages.push({
@@ -76,10 +57,8 @@ export const handleTranslate = (io: Server, socket: Socket) => {
       role: "user",
       content: text,
     });
-    const baseModel =
-      models.find((model) => model.model === request.model) || models.at(0)!;
-    const stream = await baseModel.client.chat.completions.create({
-      model: baseModel.model,
+    const stream = await MoonshotBaseClient.chat.completions.create({
+      model: "moonshot-v1-auto",
       messages,
       stream: true,
       max_tokens: 2048,
