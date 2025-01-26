@@ -1,12 +1,12 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@es-toolkit/es-toolkit@^1.31.0": "1.31.0",
     "jsr:@std/assert@1": "1.0.10",
     "jsr:@std/dotenv@~0.225.3": "0.225.3",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "npm:@shikijs/rehype@^1.24.4": "1.24.4",
     "npm:@types/node@*": "22.5.4",
+    "npm:lodash-es@^4.17.21": "4.17.21",
     "npm:lru-cache@^11.0.2": "11.0.2",
     "npm:ohash@^1.1.4": "1.1.4",
     "npm:openai@^4.77.0": "4.77.0",
@@ -21,9 +21,6 @@
     "npm:unified@^11.0.5": "11.0.5"
   },
   "jsr": {
-    "@es-toolkit/es-toolkit@1.31.0": {
-      "integrity": "58479e1c72e58177a937bafd342504f32e1cdc922603835f06af9ef79f8203ed"
-    },
     "@std/assert@1.0.10": {
       "integrity": "59b5cbac5bd55459a19045d95cc7c2ff787b4f8527c0dd195078ff6f9481fbb3",
       "dependencies": [
@@ -409,6 +406,9 @@
       "dependencies": [
         "commander"
       ]
+    },
+    "lodash-es@4.17.21": {
+      "integrity": "sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw=="
     },
     "longest-streak@3.1.0": {
       "integrity": "sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g=="
@@ -1131,10 +1131,10 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@es-toolkit/es-toolkit@^1.31.0",
       "jsr:@std/assert@1",
       "jsr:@std/dotenv@~0.225.3",
       "npm:@shikijs/rehype@^1.24.4",
+      "npm:lodash-es@^4.17.21",
       "npm:lru-cache@^11.0.2",
       "npm:ohash@^1.1.4",
       "npm:openai@^4.77.0",

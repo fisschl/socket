@@ -1,6 +1,4 @@
 import rehypeShiki from "@shikijs/rehype";
-import { LRUCache } from "lru-cache";
-import { hash } from "ohash";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
@@ -38,19 +36,6 @@ export const parseMarkdown = async (text: string) => {
     .use(rehypeStringify)
     .process(input);
   return file.toString();
-};
-
-export const markdown_cache = new LRUCache<string, string>({
-  max: 64 * 1024,
-});
-
-export const parseMarkdownCache = async (text: string) => {
-  const key = hash(text);
-  const cache_result = markdown_cache.get(key);
-  if (cache_result) return cache_result;
-  const result = await parseMarkdown(text);
-  markdown_cache.set(key, result);
-  return result;
 };
 
 const turndownService = new TurndownService();

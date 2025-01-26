@@ -31,11 +31,6 @@ export const OpenAIBaseClient = new OpenAI({
   baseURL: Deno.env.get("OPENAI_PROXY_URL"),
 });
 
-export const DashscopeBaseClient = new OpenAI({
-  apiKey: Deno.env.get("DASHSCOPE_API_KEY"),
-  baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
-});
-
 export interface TranslateRequest {
   key: string;
   language?: string;
