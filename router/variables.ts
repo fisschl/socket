@@ -1,5 +1,5 @@
 import type { Socket } from "socket.io";
-import type OpenAI from "openai";
+import type OpenAI from "@openai/openai";
 import { MoonshotBaseClient } from "./translate.ts";
 
 const NamingPrompt = `

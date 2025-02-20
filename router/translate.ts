@@ -1,5 +1,5 @@
 import type { Socket } from "socket.io";
-import OpenAI from "openai";
+import OpenAI from "@openai/openai";
 import { htmlToMarkdown, parseMarkdown } from "../utils/markdown.ts";
 
 const TranslatePromptChinese = `
@@ -24,11 +24,6 @@ const LanguageOptions: Record<string, string> = {
 export const MoonshotBaseClient = new OpenAI({
   apiKey: Deno.env.get("MOONSHOT_API_KEY"),
   baseURL: "https://api.moonshot.cn/v1",
-});
-
-export const OpenAIBaseClient = new OpenAI({
-  apiKey: Deno.env.get("OPENAI_API_KEY"),
-  baseURL: Deno.env.get("OPENAI_PROXY_URL"),
 });
 
 export interface TranslateRequest {
