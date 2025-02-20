@@ -1,6 +1,6 @@
+import { streamText } from "ai";
 import type { Socket } from "socket.io";
-import type OpenAI from "@openai/openai";
-import { MoonshotBaseClient } from "./translate.ts";
+import { model } from "../utils/moonshot.ts";
 
 const NamingPrompt = `
 你是一名程序员，你的任务是为一个字段、变量、类、文件或者函数命名。
@@ -16,30 +16,15 @@ export interface NamingRequest {
 
 export const handleVariables = (socket: Socket) => {
   socket.on("variables", async (request: NamingRequest) => {
-    const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [];
-    messages.push(
-      {
-        role: "system",
-        content: NamingPrompt,
-      },
-      {
-        role: "user",
-        content: request.text,
-      },
-    );
-    const stream = await MoonshotBaseClient.chat.completions.create({
-      model: "kimi-latest",
-      messages,
-      stream: true,
+    if (!request.text) return;
+    const { textStream } = streamText({
+      model,
+      system: NamingPrompt,
+      prompt: request.text,
     });
-    const result = {
-      text: "",
-    };
-    for await (const { choices } of stream) {
-      if (!choices.length) continue;
-      const [{ delta }] = choices;
-      if (!delta.content) continue;
-      result.text += delta.content;
+    const result = { text: "" };
+    for await (const textPart of textStream) {
+      result.text += textPart;
       socket.emit(request.key, {
         text: result.text,
       });

@@ -3,9 +3,8 @@ import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import { unified } from "unified";
+import { remark } from "remark";
 import TurndownService from "turndown";
 
 const BracketsPattern =
@@ -24,8 +23,7 @@ export const parseMarkdown = async (text: string) => {
       return match;
     }
   );
-  const file = await unified()
-    .use(remarkParse)
+  const file = await remark()
     .use(remarkGfm)
     .use(remarkMath)
     .use(remarkRehype)

@@ -1,6 +1,7 @@
+import { streamText } from "ai";
 import type { Socket } from "socket.io";
-import OpenAI from "@openai/openai";
 import { htmlToMarkdown, parseMarkdown } from "../utils/markdown.ts";
+import { model } from "../utils/moonshot.ts";
 
 const TranslatePromptChinese = `
 你是一名翻译助手，精通多种语言和领域的翻译。
@@ -21,50 +22,30 @@ const LanguageOptions: Record<string, string> = {
   en: TranslatePromptEnglish,
 };
 
-export const MoonshotBaseClient = new OpenAI({
-  apiKey: Deno.env.get("MOONSHOT_API_KEY"),
-  baseURL: "https://api.moonshot.cn/v1",
-});
-
 export interface TranslateRequest {
   key: string;
   language?: string;
-  text?: string;
+  text: string;
 }
 
 export const handleTranslate = (socket: Socket) => {
   socket.on("translation", async (request: TranslateRequest) => {
-    const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [];
-    messages.push({
-      role: "system",
-      content:
-        LanguageOptions[request.language || "zh"] || TranslatePromptChinese,
+    const language = request.language || "zh";
+    const system = LanguageOptions[language] || TranslatePromptChinese;
+    const content = htmlToMarkdown(request.text);
+    if (!content) return;
+    const { textStream } = streamText({
+      model,
+      system,
+      prompt: content,
     });
-    const text = htmlToMarkdown(request.text);
-    if (!text) return;
-    messages.push({
-      role: "user",
-      content: text,
-    });
-    const stream = await MoonshotBaseClient.chat.completions.create({
-      model: "kimi-latest",
-      messages,
-      stream: true,
-    });
-    const result = {
-      text: "",
-    };
-    for await (const { choices } of stream) {
-      if (!choices.length) continue;
-      const [{ delta }] = choices;
-      if (!delta.content) continue;
-      result.text += delta.content;
+    const result = { text: "" };
+    for await (const textPart of textStream) {
+      result.text += textPart;
       socket.emit(request.key, {
         text: await parseMarkdown(result.text),
       });
     }
-    socket.emit(request.key, {
-      finished: true,
-    });
+    socket.emit(request.key, { finished: true });
   });
 };
