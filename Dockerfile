@@ -8,6 +8,6 @@ RUN deno install
 
 COPY . .
 
-RUN deno cache main.ts
+RUN deno cache app.ts
 
 CMD deno run --allow-all app.ts
