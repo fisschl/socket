@@ -10,4 +10,4 @@ COPY . .
 
 RUN deno cache main.ts
 
-CMD deno run --allow-all main.ts
+CMD deno run --allow-all app.ts

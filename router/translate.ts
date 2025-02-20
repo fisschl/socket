@@ -52,11 +52,9 @@ export const handleTranslate = (socket: Socket) => {
       content: text,
     });
     const stream = await MoonshotBaseClient.chat.completions.create({
-      model: "moonshot-v1-auto",
+      model: "kimi-latest",
       messages,
       stream: true,
-      max_tokens: 2048,
-      max_completion_tokens: 2048,
     });
     const result = {
       text: "",
@@ -65,7 +63,6 @@ export const handleTranslate = (socket: Socket) => {
       if (!choices.length) continue;
       const [{ delta }] = choices;
       if (!delta.content) continue;
-      console.log(delta.content);
       result.text += delta.content;
       socket.emit(request.key, {
         text: await parseMarkdown(result.text),

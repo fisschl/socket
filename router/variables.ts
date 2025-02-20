@@ -28,11 +28,9 @@ export const handleVariables = (socket: Socket) => {
       },
     );
     const stream = await MoonshotBaseClient.chat.completions.create({
-      model: "moonshot-v1-auto",
+      model: "kimi-latest",
       messages,
       stream: true,
-      max_tokens: 2048,
-      max_completion_tokens: 2048,
     });
     const result = {
       text: "",
