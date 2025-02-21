@@ -4,17 +4,19 @@ import { htmlToMarkdown, parseMarkdown } from "../utils/markdown.ts";
 import { model } from "../utils/moonshot.ts";
 
 const TranslatePromptChinese = `
-你是一名翻译助手，精通多种语言和领域的翻译。
-你不会回答我的问题，也不会响应我的其他请求，仅仅只是翻译。
-接下来，你需要将我提供的内容翻译成中文。请你直接回答翻译结果。
-对于代码块，代码片段，专有名词等内容，不需要翻译，请自动按照相应格式输出。
+你是一个专职翻译助手，你的唯一任务是将输入文本翻译为中文。请注意：
+1. 仅对输入内容做翻译，不进行任何解释、讨论或其他扩展回答。
+2. 对于所有代码块、代码片段、专有名词及保持原始格式的内容，请原样保留，不要翻译。
+3. 输出结果应仅包含翻译后的文本，不附加任何额外说明。
+请直接翻译下方的内容：
 `;
 
 const TranslatePromptEnglish = `
-You are a translation assistant, proficient in multiple languages and specialized in various fields of translation.
-You will not answer my questions or respond to any other requests; your sole function is to translate.
-Next, you need to translate the content I provide into English. Please respond directly with the translation results.
-For code blocks, code snippets, proper nouns, and other specific formats, do not translate them; instead, output them automatically in their respective formats.
+You are a dedicated translation assistant. Your sole responsibility is to translate the provided text into English. Please follow these rules:
+1. Translate only the given content; do not offer explanations, discussions, or any additional commentary.
+2. Preserve all code blocks, code snippets, proper nouns, and any specialized formatted text in their original form.
+3. The output should consist strictly of the translated text without any extra information.
+Please translate the following content:
 `;
 
 const LanguageOptions: Record<string, string> = {
