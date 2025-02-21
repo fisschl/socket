@@ -1,4 +1,5 @@
-FROM registry.cn-shanghai.aliyuncs.com/fisschl/deno:latest
+FROM registry.cn-shanghai.aliyuncs.com/fisschl/deno:latest AS builder
+
 WORKDIR /root
 
 COPY deno.json .
@@ -8,6 +9,12 @@ RUN deno install
 
 COPY . .
 
-RUN deno cache app.ts
+RUN deno compile --allow-all --output app app.ts
 
-CMD deno run --allow-all app.ts
+FROM registry.cn-shanghai.aliyuncs.com/fisschl/deno:latest
+
+WORKDIR /root
+
+COPY --from=builder /root/app .
+
+CMD ./app
