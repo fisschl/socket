@@ -1,7 +1,9 @@
-FROM registry.cn-shanghai.aliyuncs.com/fisschl/deno:latest
+FROM registry.cn-shanghai.aliyuncs.com/fisschl/bun:latest
 WORKDIR /root
-COPY deno.json .
-COPY deno.lock .
-RUN deno install
+COPY package.json .
+COPY bun.lock .
+RUN bun install --production
+COPY prisma prisma
+RUN bun run prisma generate
 COPY . .
-CMD deno run --allow-all app.ts
+CMD bun src/index.ts
