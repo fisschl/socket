@@ -5,6 +5,7 @@
       "name": "socket",
       "dependencies": {
         "@prisma/client": "^6.4.1",
+        "@tsconfig/bun": "^1.0.7",
         "hono": "^4.7.2",
         "ioredis": "^5.5.0",
         "prisma": "^6.4.1",
@@ -85,6 +86,8 @@
     "@prisma/get-platform": ["@prisma/get-platform@6.4.1", "https://registry.npmmirror.com/@prisma/get-platform/-/get-platform-6.4.1.tgz", { "dependencies": { "@prisma/debug": "6.4.1" } }, "sha512-gXqZaDI5scDkBF8oza7fOD3Q3QMD0e0rBynlzDDZdTWbWmzjuW58PRZtj+jkvKje2+ZigCWkH8SsWZAsH6q1Yw=="],
 
     "@socket.io/component-emitter": ["@socket.io/component-emitter@3.1.2", "https://registry.npmmirror.com/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz", {}, "sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA=="],
+
+    "@tsconfig/bun": ["@tsconfig/bun@1.0.7", "https://registry.npmmirror.com/@tsconfig/bun/-/bun-1.0.7.tgz", {}, "sha512-udGrGJBNQdXGVulehc1aWT73wkR9wdaGBtB6yL70RJsqwW/yJhIg6ZbRlPOfIUiFNrnBuYLBi9CSmMKfDC7dvA=="],
 
     "@types/bun": ["@types/bun@1.2.3", "https://registry.npmmirror.com/@types/bun/-/bun-1.2.3.tgz", { "dependencies": { "bun-types": "1.2.3" } }, "sha512-054h79ipETRfjtsCW9qJK8Ipof67Pw9bodFWmkfkaUaRiIQ1dIV2VTlheshlBx3mpKr0KeK8VqnMMCtgN9rQtw=="],
 
